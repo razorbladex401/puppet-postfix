@@ -132,6 +132,7 @@ describe 'postfix' do
             root_mail_recipient: 'foo',
             use_amavisd: true,
             use_dovecot_lda: true,
+            use_postscreen: true,
             use_schleuder: true,
             use_sympa: true,
             mail_user: 'bar',
@@ -485,6 +486,18 @@ describe 'postfix' do
 
         it 'updates master.cf with the specified flags to dovecot' do
           is_expected.to contain_file(postfix_master_cf_path).with_content(%r{dovecot.*\n.* user=vmail:vmail })
+        end
+      end
+
+      context 'when use_postscreen is true' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+        let(:params) { { use_postscreen: true } }
+
+        it 'updates master.cf with postscreen support' do
+          is_expected.to contain_file(postfix_master_cf_path).with_content(
+            %r{smtpd      pass  -       -       n       -       -       smtpd}
+            %r{dnsblog   unix  -       -       n       -       0       dnsblog}
+            %r{tlsproxy  unix  -       -       n       -       0       tlsproxy}
+          )
         end
       end
 

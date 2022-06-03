@@ -26,6 +26,7 @@ class postfix::files {
   $smtp_listen         = $postfix::_smtp_listen
   $use_amavisd         = $postfix::use_amavisd
   $use_dovecot_lda     = $postfix::use_dovecot_lda
+  $use_postscreen      = $postfix::use_postscreen
   $use_schleuder       = $postfix::use_schleuder
   $use_sympa           = $postfix::use_sympa
 

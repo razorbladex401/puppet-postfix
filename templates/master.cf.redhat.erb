@@ -23,6 +23,11 @@ smtp      inet  n       -       <%= @jail %>       -       -       smtpd
 <%= @master_smtps %>
 <% end -%>
 #smtp      inet  n       -       n       -       -       smtpd
+<% if @use_postscreen -%>
+smtpd      pass  -       -       <%= @jail %>       -       -       smtpd
+dnsblog   unix  -       -       <%= @jail %>       -       0       dnsblog
+tlsproxy  unix  -       -       <%= @jail %>       -       0       tlsproxy
+<% end -%>
 #submission inet n       -       n       -       -       smtpd
 #  -o smtpd_enforce_tls=yes
 #  -o smtpd_sasl_auth_enable=yes
